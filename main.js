@@ -1,17 +1,4 @@
 async function getTotalPeople () { 
-  // const enquirer = require('enquirer')
-  // async function hoge() {
-    // const question = {
-      // type: 'select',
-      // name: 'title',
-      // message: '知りたい情報を選択してください',
-      // choices: ['全国の累積陽性者数', '都道府県別の累積陽性者数', '入院治療等を要する者', '累積の死亡者数']
-    // }
-    // const answer = await enquirer.prompt(question)
-    // console.log(`僕も${answer.title}が好きだよ`)
-  // }
-  // hoge()
-
   const fetch = require('node-fetch')
   // const url = 'https://data.corona.go.jp/converted-json/covid19japan-npatients.json' // 最新の感染者数
   // const res = await fetch(url)
@@ -40,7 +27,7 @@ async function getTotalPeople () {
   }
 }
 
-// getTotalPeople()
+getTotalPeople()
 
 // const enquirer = require('enquirer')
   // async function hoge() {
