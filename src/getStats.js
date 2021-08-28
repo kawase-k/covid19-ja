@@ -1,59 +1,35 @@
-const fetch = require('node-fetch')
+const GetData = require('./getData')
 
 class GetStats {
   constructor (info) {
-    this._info = info
-    this._urlNationwide = 'https://data.corona.go.jp/converted-json/covid19japan-npatients.json'
-    this._urlPrefecture = 'https://opendata.corona.go.jp/api/Covid19JapanAll'
-    this._urlInpatient = 'https://data.corona.go.jp/converted-json/covid19japan-ncures.json'
-    this._urlCorpse = 'https://data.corona.go.jp/converted-json/covid19japan-ndeaths.json'
+    this._answer = info.answer
+    this._cont1 = info.choices[0]
+    this._cont2 = info.choices[1]
+    this._cont3 = info.choices[2]
+    this._cont4 = info.choices[3]
+    this._getData = new GetData()
   }
 
-  // get info () {
-    // return this._info
-  // }
-
-  // get urlNationwide () {
-    // return this._urlNationwide
-  // }
-
-  // get urlPrefecture () {
-    // return this._urlPrefecture
-  // }
-
-  // get urlInpatient () {
-    // return this._urlInpatient
-  // }
-
-  // get urlCorpse () {
-    // return this._urlCorpse
-  // }
-
-  async fetchNationwideData () {
-    const res = await fetch(this._urlNationwide)
-    const json = await res.json()
-    const latestDate = await json.slice(-1)[0]
-    console.log(`${latestDate.date}時点の全国の累積陽性者数は${latestDate.npatients}人です。`) // 最新の感染者数の合計
-  }
-
-  async fetchPrefectureData () {
-    const res = await fetch(this._urlPrefecture)
-    const numberAllPrefectures = 47
-    const array = []
-    const json = await res.json()
-    const itemList = await json.itemList
-    for (let pref = 0; pref < numberAllPrefectures; pref++) {
-      array.push(itemList.shift())
-    }
-    // const arrayAllPrefectures = array.map(a => (Number(a.npatients)))
-    // const reducer = (accumulator, currentValue) => accumulator + currentValue
-    // const total = arrayAllPrefectures.reduce(reducer)
-    // const date = array[0].date
-    // console.log(`${date}時点の累積陽性者数は${total}人です。`) // これまでの感染者数の合計
-
-    console.log(`${array[0].date}時点での都道府県別累積の陽性者数です`)
-    for (let pref = 0; pref < numberAllPrefectures; pref++) {
-      console.log(`${array[pref].name_jp}は${array[pref].npatients}人です`)
+  async output () {
+    if (this._answer === this._cont1) {
+      const result = await this._getData.fetchNationwideData()
+      console.log(`${result.date}時点の${this._cont1}は${result.npatients}人です。`)
+    } else if (this._answer === this._cont2) {
+      const result = await this._getData.fetchPrefectureData()
+      console.log(`${result[0].date}時点の${this._cont2}です。\n`)
+      for (let pref = 0; pref < result.length; pref++) {
+        // console.log(`${result[pref].name_jp}は${result[pref].npatients}人です`)
+        const text = `${result[pref].name_jp}は${result[pref].npatients}人`
+        const length = text.length
+        process.stdout.write(text.padEnd(length + 2))
+        if ((pref + 1) % 5 === 0) process.stdout.write('\n')
+      }
+    } else if (this._answer === this._cont3) {
+      const result = await this._getData.fetchInpatientData()
+      console.log(`${result.date}時点の${this._cont3}は${result.ncures}人です。`)
+    } else {
+      const result = await this._getData.fetchCorpseData()
+      console.log(`${result.date}時点の${this._cont4}は${result.ndeaths}人です。`)
     }
   }
 }
