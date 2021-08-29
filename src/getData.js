@@ -10,14 +10,12 @@ class GetData {
 
   async formatter (url) {
     const res = await fetch(url)
-    const json = await res.json()
-    return json
+    return res.json()
   }
 
   async fetchNationwideData () {
     const json = await this.formatter(this._urlNationwide)
-    const latestDate = await json.slice(-1)[0]
-    return latestDate
+    return json.slice(-1)[0]
   }
 
   async fetchPrefectureData () {
@@ -33,14 +31,12 @@ class GetData {
 
   async fetchInpatientData () {
     const json = await this.formatter(this._urlInpatient)
-    const latestDate = await json.slice(-1)[0]
-    return latestDate
+    return json.slice(-1)[0]
   }
 
   async fetchCorpseData () {
     const json = await this.formatter(this._urlCorpse)
-    const latestDate = await json.slice(-1)[0]
-    return latestDate
+    return json.slice(-1)[0]
   }
 }
 

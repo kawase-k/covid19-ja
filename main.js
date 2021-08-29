@@ -13,13 +13,13 @@ class Main {
     const choices = questions.choices.map(question => question.name)
     return {
       answer: answer.title,
-      choices: choices
+      query: choices
     }
   }
 
   static run (info) {
-    const formatter = new GetStats(info)
-    formatter.output()
+    const getStats = new GetStats(info)
+    getStats.output()
   }
 }
 
