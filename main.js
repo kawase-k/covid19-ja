@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const GetStats = require('./src/getStats')
 const enquirer = require('enquirer')
 
