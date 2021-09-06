@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const GetStats = require('./src/getStats')
+const Formatter = require('./src/outputFormatter')
 const enquirer = require('enquirer')
 
 class Main {
@@ -20,8 +20,8 @@ class Main {
   }
 
   static run (info) {
-    const getStats = new GetStats(info)
-    getStats.output()
+    const formatter = new Formatter(info)
+    formatter.showResult()
   }
 }
 
