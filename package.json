@@ -1,6 +1,6 @@
 {
   "name": "covid19-ja",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "covid19-ja is a library that obtains open data currently published from the website of the Cabinet Secretariat.",
   "main": "main.js",
   "bin": {
